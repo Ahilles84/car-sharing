@@ -3,7 +3,7 @@ package by.it.academy.controllers;
 import by.it.academy.entities.User;
 import by.it.academy.repositories.UserRepositoryImpl;
 import by.it.academy.services.UserServiceImpl;
-import by.it.academy.services.impl.UserService;
+import by.it.academy.services.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

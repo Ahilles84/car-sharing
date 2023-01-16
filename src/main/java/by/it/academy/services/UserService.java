@@ -1,4 +1,4 @@
-package by.it.academy.services.impl;
+package by.it.academy.services;
 
 import by.it.academy.entities.User;
 

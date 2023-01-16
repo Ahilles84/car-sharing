@@ -1,4 +1,4 @@
-package by.it.academy.repositories.impl;
+package by.it.academy.repositories;
 
 import by.it.academy.entities.User;
 

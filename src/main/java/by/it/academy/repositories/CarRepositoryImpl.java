@@ -1,7 +1,6 @@
 package by.it.academy.repositories;
 
 import by.it.academy.entities.Car;
-import by.it.academy.repositories.impl.CarRepository;
 
 import java.util.List;
 

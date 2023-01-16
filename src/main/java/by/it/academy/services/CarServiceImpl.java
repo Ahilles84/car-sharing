@@ -1,8 +1,7 @@
 package by.it.academy.services;
 
 import by.it.academy.entities.Car;
-import by.it.academy.repositories.impl.CarRepository;
-import by.it.academy.services.impl.CarService;
+import by.it.academy.repositories.CarRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

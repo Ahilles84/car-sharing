@@ -1,7 +1,6 @@
 package by.it.academy.repositories;
 
 import by.it.academy.entities.User;
-import by.it.academy.repositories.impl.UserRepository;
 
 import java.util.List;
 

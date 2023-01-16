@@ -3,7 +3,7 @@ package by.it.academy.controllers;
 import by.it.academy.entities.Car;
 import by.it.academy.repositories.CarRepositoryImpl;
 import by.it.academy.services.CarServiceImpl;
-import by.it.academy.services.impl.CarService;
+import by.it.academy.services.CarService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
