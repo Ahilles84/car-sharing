@@ -1,7 +1,8 @@
 package by.it.academy.services;
 
 import by.it.academy.entities.User;
-import by.it.academy.repositories.UserRepository;
+import by.it.academy.repositories.impl.UserRepository;
+import by.it.academy.services.impl.UserService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

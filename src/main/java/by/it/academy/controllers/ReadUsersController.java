@@ -3,7 +3,7 @@ package by.it.academy.controllers;
 import by.it.academy.entities.User;
 import by.it.academy.repositories.UserRepositoryImpl;
 import by.it.academy.services.UserServiceImpl;
-import by.it.academy.services.UserService;
+import by.it.academy.services.impl.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,9 +27,9 @@ public class ReadUsersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       RequestDispatcher requestDispatcher = req.getRequestDispatcher(USERS_PAGE);
-       List<User> users = userService.readUsers();
-       req.setAttribute("users", users);
-       requestDispatcher.forward(req, resp);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(USERS_PAGE);
+        List<User> users = userService.readUsers();
+        req.setAttribute("users", users);
+        requestDispatcher.forward(req, resp);
     }
 }

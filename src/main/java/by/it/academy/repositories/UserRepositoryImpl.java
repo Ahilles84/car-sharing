@@ -1,10 +1,11 @@
 package by.it.academy.repositories;
 
 import by.it.academy.entities.User;
+import by.it.academy.repositories.impl.UserRepository;
 
 import java.util.List;
 
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
     private final List<User> users;
     {
         users = List.of(new User("Oleg", "Kuleshov", 38),
