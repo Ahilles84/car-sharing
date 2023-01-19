@@ -12,8 +12,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User createUser(String firstName, String lastName, int age) {
-        User user = new User(firstName, lastName, age);
+    public User createUser(String firstName, String lastName, int age, String login, String password) {
+        User user = new User(firstName, lastName, age, login, password);
         users.add(user);
         return user;
     }

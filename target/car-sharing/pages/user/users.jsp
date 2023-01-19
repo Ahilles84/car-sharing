@@ -18,6 +18,7 @@
       <th>First Name</th>
       <th>Second Name</th>
       <th>Age</th>
+      <th>Login</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@
         <td>${user.firstName}</td>
         <td>${user.lastName}</td>
         <td>${user.age}</td>
+        <td>${user.login}</td>
       </tr>
     </c:forEach>
   </tbody>

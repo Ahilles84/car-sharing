@@ -28,7 +28,9 @@ public class CreateUserController extends HttpServlet {
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         int age = Integer.parseInt(req.getParameter("age"));
-        userService.createUser(firstName, lastName, age);
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        userService.createUser(firstName, lastName, age, login, password);
         req.getRequestDispatcher(USERS_URI).forward(req, resp);
     }
 

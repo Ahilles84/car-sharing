@@ -17,16 +17,20 @@
     <tr>
         <th>Firstname</th>
         <th>Lastname</th>
-        <th>age</th>
+        <th>Age</th>
+        <th>Login</th>
+        <th>Password</th>
     </tr>
     </thead>
 
     <tbody>
     <form action="/user/create" method="post">
         <tr>
-            <td><input type="text" name="firstName" placeholder="put your firstname"></td>
-            <td><input type="text" name="lastName" placeholder="put your lastname"></td>
-            <td><input type="text" name="age" placeholder="put your age"></td>
+            <td><input type="text" name="firstName" placeholder="enter your firstname"></td>
+            <td><input type="text" name="lastName" placeholder="enter your lastname"></td>
+            <td><input type="text" name="age" placeholder="enter your age"></td>
+            <td><input type="text" name="login" placeholder="enter your login"></td>
+            <td><input type="text" name="password" placeholder="enter your password"></td>
             <td><input type="submit" value="CREATE"></td>
         </tr>
     </form>
