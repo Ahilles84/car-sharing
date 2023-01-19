@@ -1,18 +1,21 @@
 package by.it.academy.repositories;
 
 import by.it.academy.entities.User;
-
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
+
     private final List<User> users;
-    {
-        users = List.of(new User("Oleg", "Kuleshov", 38),
-                new User("Dmitry", "Steba", 38));
+
+    public UserRepositoryImpl(List<User> users) {
+        this.users = users;
     }
+
     @Override
-    public User createUser(String firstName, String secondName, int age) {
-        return new User(firstName, secondName, age);
+    public User createUser(String firstName, String lastName, int age) {
+        User user = new User(firstName, lastName, age);
+        users.add(user);
+        return user;
     }
 
     @Override

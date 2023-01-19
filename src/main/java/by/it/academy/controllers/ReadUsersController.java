@@ -6,7 +6,10 @@ import by.it.academy.services.UserServiceImpl;
 import by.it.academy.services.UserService;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +22,8 @@ import java.util.List;
 public class ReadUsersController extends HttpServlet {
     private static final long serialVersionUID = 574523704572035L;
     private static final String USERS_PAGE = "/pages/user/users.jsp";
-    private final UserService userService;
 
-    public ReadUsersController() {
-        this.userService = new UserServiceImpl(new UserRepositoryImpl());
-    }
+    private UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,5 +31,14 @@ public class ReadUsersController extends HttpServlet {
         List<User> users = userService.readUsers();
         req.setAttribute("users", users);
         requestDispatcher.forward(req, resp);
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        userService = (UserServiceImpl)config.getServletContext().getAttribute("userService");
     }
 }
