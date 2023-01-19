@@ -1,7 +1,6 @@
 package by.it.academy.controllers;
 
 import by.it.academy.entities.User;
-import by.it.academy.repositories.UserRepository;
 import by.it.academy.repositories.UserRepositoryImpl;
 import by.it.academy.services.UserService;
 import by.it.academy.services.UserServiceImpl;
@@ -35,7 +34,7 @@ public class CreateUserController extends HttpServlet {
     }
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         List<User> users = new ArrayList<>();
         userService = new UserServiceImpl(new UserRepositoryImpl(users));
         config.getServletContext().setAttribute("userService", userService);

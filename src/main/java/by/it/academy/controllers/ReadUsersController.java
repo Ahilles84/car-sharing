@@ -1,15 +1,12 @@
 package by.it.academy.controllers;
 
 import by.it.academy.entities.User;
-import by.it.academy.repositories.UserRepositoryImpl;
 import by.it.academy.services.UserServiceImpl;
 import by.it.academy.services.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +35,7 @@ public class ReadUsersController extends HttpServlet {
     }
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         userService = (UserServiceImpl)config.getServletContext().getAttribute("userService");
     }
 }
