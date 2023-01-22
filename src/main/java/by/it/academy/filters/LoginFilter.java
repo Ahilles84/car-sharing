@@ -24,16 +24,16 @@ public class LoginFilter extends HttpFilter {
         UserService userService = (UserServiceImpl) servletContext.getAttribute("userService");
         List<User> users = userService.readUsers();
         String login = req.getParameter("login");
-        if (users.isEmpty()){
+        if (users.isEmpty()) {
             req.getRequestDispatcher("/user/create").forward(req, res);
-        }
-        for(User item : users){
-            if (item.getLogin().equals(login)) {
-                req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
+        } else {
+            for (User item : users) {
+                if (item.getLogin().equals(login)) {
+                    req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
+                }
             }
         }
     }
-
 
 
     @Override
