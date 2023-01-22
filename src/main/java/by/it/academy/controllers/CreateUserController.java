@@ -5,6 +5,7 @@ import by.it.academy.repositories.UserRepositoryImpl;
 import by.it.academy.services.UserService;
 import by.it.academy.services.UserServiceImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +32,12 @@ public class CreateUserController extends HttpServlet {
         String password = req.getParameter("password");
         userService.createUser(firstName, lastName, age, login, password);
         req.getRequestDispatcher(USERS_URI).forward(req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.jsp");
+        requestDispatcher.forward(req, resp);
     }
 
     @Override

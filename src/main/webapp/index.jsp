@@ -12,6 +12,7 @@
     <title>Create new user</title>
 </head>
 <body>
+    <h1>Welcome to our car-sharing!</h1>
 <table>
     <thead>
     <tr>
