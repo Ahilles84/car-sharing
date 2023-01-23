@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-//@WebFilter(urlPatterns = {"/user/create"})
+@WebFilter(urlPatterns = {"/user/create"})
 public class LoginFilter extends HttpFilter {
     private static final long serialVersionUID = 10297454264L;
     private static final String ERROR_PAGE = "/pages/error/login_exists.jsp";
