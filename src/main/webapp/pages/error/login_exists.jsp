@@ -14,6 +14,7 @@
     <div>
         <h1>User with such login already exists. Please choose another login.</h1>
     </div>
-    <a href="/user/create">Create user</a>
+    <a href="/user/create">Register</a>
+    <a href="/index.html">Main page</a>
 </body>
 </html>

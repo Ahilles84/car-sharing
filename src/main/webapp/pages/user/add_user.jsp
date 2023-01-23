@@ -10,9 +10,12 @@
 <html>
 <head>
     <title>Create new user</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-    <h1>Welcome to our car-sharing!</h1>
+    <div class="w3-container w3-blue-grey w3-opacity w3-left-align">
+        <h1>Please fill in the form below.</h1>
+    </div>
 <table>
     <thead>
     <tr>
@@ -32,7 +35,7 @@
             <td><input type="text" name="age" placeholder="enter your age"></td>
             <td><input type="text" name="login" placeholder="enter your login"></td>
             <td><input type="text" name="password" placeholder="enter your password"></td>
-            <td><input type="submit" value="CREATE"></td>
+            <td><input type="submit" value="CREATE" class="w3-btn w3-green w3-round-large w3-margin-bottom"></td>
         </tr>
     </form>
     </tbody>
