@@ -43,8 +43,6 @@ public class CreateUserController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        List<User> users = new ArrayList<>();
-        userService = new UserServiceImpl(new UserRepositoryImpl(users));
-        config.getServletContext().setAttribute("userService", userService);
+        userService = (UserServiceImpl) config.getServletContext().getAttribute("userService");
     }
 }
