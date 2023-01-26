@@ -29,6 +29,7 @@ public class ReadUsersController extends HttpServlet {
         req.setAttribute("users", users);
         requestDispatcher.forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
@@ -36,6 +37,6 @@ public class ReadUsersController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        userService = (UserServiceImpl)config.getServletContext().getAttribute("userService");
+        userService = (UserServiceImpl) config.getServletContext().getAttribute("userService");
     }
 }

@@ -33,6 +33,8 @@
     </c:forEach>
   </tbody>
 </table>
+  <a href="/user/create">Register</a>
+  <a href="/index.html">Main page</a>
 </body>
 
 <style type="text/css">

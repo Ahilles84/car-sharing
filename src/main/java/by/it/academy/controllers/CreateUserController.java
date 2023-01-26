@@ -20,6 +20,7 @@ import java.util.List;
 public class CreateUserController extends HttpServlet {
     private static final long serialVersionUID = 411848468446548L;
     private static final String USERS_URI = "/user/read";
+    private static final String ADD_USER = "/pages/user/add_user.jsp";
 
     private UserService userService;
 
@@ -36,14 +37,12 @@ public class CreateUserController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(ADD_USER);
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     public void init(ServletConfig config) {
-        List<User> users = new ArrayList<>();
-        userService = new UserServiceImpl(new UserRepositoryImpl(users));
-        config.getServletContext().setAttribute("userService", userService);
+        userService = (UserServiceImpl) config.getServletContext().getAttribute("userService");
     }
 }
