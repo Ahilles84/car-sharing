@@ -18,13 +18,13 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/user/read"})
 public class ReadUsersController extends HttpServlet {
     private static final long serialVersionUID = 574523704572035L;
-    private static final String USERS_PAGE = "/pages/user/users.jsp";
+    private static final String USERS_LIST = "/pages/user/users.jsp";
 
     private UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(USERS_PAGE);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(USERS_LIST);
         List<User> users = userService.readUsers();
         req.setAttribute("users", users);
         requestDispatcher.forward(req, resp);
