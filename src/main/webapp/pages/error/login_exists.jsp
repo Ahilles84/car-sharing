@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: snowball
@@ -5,16 +6,17 @@
   Time: 17:09
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Login exists</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
     <div>
         <h1>User with such login already exists. Please choose another login.</h1>
     </div>
-    <a href="/user/create">Register</a>
-    <a href="/index.html">Main page</a>
+    <a href="<c:url value="/user/create"/>">Register</a>
+    <a href="<c:url value="/index.html"/>">Main page</a>
 </body>
 </html>

@@ -25,7 +25,9 @@ public class LoginFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         List<User> users = userService.readUsers();
-        Optional<User> userOptional = users.stream().filter(user -> user.getLogin().equals(req.getParameter("login")))
+        Optional<User> userOptional = users.stream()
+                .filter(user -> user.getLogin()
+                .equals(req.getParameter("login")))
                 .findFirst();
         if (userOptional.isPresent()) {
             req.getRequestDispatcher(ERROR_PAGE).forward(req, res);

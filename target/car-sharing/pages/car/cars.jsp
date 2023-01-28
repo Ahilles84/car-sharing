@@ -10,9 +10,10 @@
 <html>
 <head>
     <title>Cars</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-<table class="table">
+<table>
     <thead>
     <tr>
         <th>Model</th>
@@ -31,46 +32,8 @@
     </c:forEach>
     </tbody>
 </table>
-<a href="/user/create">Register</a>
-<a href="/index.html">Main page</a>
-
-<style type="text/css">
-    .table {
-        width: 100%;
-        border: none;
-        margin-bottom: 20px;
-    }
-    .table thead th {
-        font-weight: bold;
-        text-align: left;
-        border: none;
-        padding: 10px 15px;
-        background: #d8d8d8;
-        font-size: 14px;
-    }
-    .table thead tr th:first-child {
-        border-radius: 8px 0 0 8px;
-    }
-    .table thead tr th:last-child {
-        border-radius: 0 8px 8px 0;
-    }
-    .table tbody td {
-        text-align: left;
-        border: none;
-        padding: 10px 15px;
-        font-size: 14px;
-        vertical-align: top;
-    }
-    .table tbody tr:nth-child(even){
-        background: #f3f3f3;
-    }
-    .table tbody tr td:first-child {
-        border-radius: 8px 0 0 8px;
-    }
-    .table tbody tr td:last-child {
-        border-radius: 0 8px 8px 0;
-    }
-</style>
+<a href="<c:url value="/user/create"/>">Register</a>
+<a href="<c:url value="/index.html"/>">Main page</a>
 
 </body>
 </html>

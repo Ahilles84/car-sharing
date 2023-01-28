@@ -24,17 +24,40 @@
         <th>Age</th>
         <th>Login</th>
         <th>Password</th>
+        <th>User Type</th>
     </tr>
     </thead>
 
     <tbody>
     <form action="<c:url value="/user/create"/>" method="post">
         <tr>
-            <td><input type="text" name="firstName" placeholder="enter your firstname"></td>
-            <td><input type="text" name="lastName" placeholder="enter your lastname"></td>
-            <td><input type="text" name="age" placeholder="enter your age"></td>
-            <td><input type="text" name="login" placeholder="enter your login"></td>
-            <td><input type="text" name="password" placeholder="enter your password"></td>
+            <td><label>
+                <input type="text" name="firstName" placeholder="enter your firstname">
+            </label></td>
+            <td><label>
+                <input type="text" name="lastName" placeholder="enter your lastname">
+            </label></td>
+            <td><label>
+                <input type="text" name="age" placeholder="enter your age">
+            </label></td>
+            <td><label>
+                <input type="text" name="login" placeholder="enter your login">
+            </label></td>
+            <td><label>
+                <input type="text" name="password" placeholder="enter your password">
+            </label></td>
+            <td><label>
+                <input type="text" name="userType" placeholder="choose your userType">
+            </label></td>
+<%--            <p>--%>
+<%--                <label>--%>
+<%--                    <select size="2">--%>
+<%--                        <option disabled>choose your userType</option>--%>
+<%--                        <option value="USER">USER</option>--%>
+<%--                        <option value="ADMIN">ADMIN</option>--%>
+<%--                    </select>--%>
+<%--                </label>--%>
+<%--            </p>--%>
             <td><input type="submit" value="CREATE" class="w3-btn w3-green w3-round-large w3-margin-bottom"></td>
         </tr>
     </form>
