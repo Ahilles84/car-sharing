@@ -1,7 +1,6 @@
 package by.it.academy.controllers;
 
 import by.it.academy.entities.Car;
-import by.it.academy.repositories.CarRepositoryImpl;
 import by.it.academy.services.CarServiceImpl;
 import by.it.academy.services.CarService;
 
@@ -20,7 +19,7 @@ public class ReadCarsController extends HttpServlet {
     private final CarService carService;
 
     public ReadCarsController() {
-        this.carService = CarServiceImpl.getInstance();
+        this.carService = CarServiceImpl.getCarService();
     }
 
     @Override

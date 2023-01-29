@@ -29,7 +29,7 @@ public class AuthorisationController extends HttpServlet {
         HttpSession session = req.getSession();
         for (User user : users) {
             if (login.equals(user.getLogin()) && password.equals(user.getPassword())){
-                session.setAttribute(user.getLogin(), user);
+                session.setAttribute(user.getLogin(), user.getUserType());
                 req.getRequestDispatcher("/index.html").forward(req, resp);
             } else {
                 req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
@@ -43,6 +43,6 @@ public class AuthorisationController extends HttpServlet {
     }
     @Override
     public void init(ServletConfig config) {
-        userService = (UserServiceImpl) config.getServletContext().getAttribute("userService");
+        userService = UserServiceImpl.getUserService();
     }
 }

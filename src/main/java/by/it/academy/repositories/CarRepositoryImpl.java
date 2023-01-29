@@ -7,16 +7,16 @@ import java.util.List;
 
 public class CarRepositoryImpl implements CarRepository {
     private static final List<Car> CARS = new ArrayList<>();
-    private static final CarRepositoryImpl INSTANCE = new CarRepositoryImpl();
+    private static final CarRepositoryImpl CAR_REPOSITORY = new CarRepositoryImpl();
 
     private CarRepositoryImpl() {
     }
 
-    public static CarRepositoryImpl getInstance() {
-        return INSTANCE;
+    public static CarRepositoryImpl getCarRepository() {
+        return CAR_REPOSITORY;
     }
 
-    {
+    static {
         CARS.add(new Car("Volkswagen Polo", "AB 1234-6", false));
         CARS.add(new Car("Renault Laguna", "АТ 4578-6", false));
         CARS.add(new Car("BMW X6", "РР 5555-6", false));

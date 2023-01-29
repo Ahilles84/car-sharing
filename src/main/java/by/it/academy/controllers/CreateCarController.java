@@ -36,6 +36,6 @@ public class CreateCarController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        carService = CarServiceImpl.getInstance();
+        carService = CarServiceImpl.getCarService();
     }
 }

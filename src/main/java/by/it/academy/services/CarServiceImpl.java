@@ -1,18 +1,17 @@
 package by.it.academy.services;
 
 import by.it.academy.entities.Car;
-import by.it.academy.repositories.CarRepository;
 import by.it.academy.repositories.CarRepositoryImpl;
 
 import java.util.List;
 public class CarServiceImpl implements CarService {
-    private static final CarServiceImpl INSTANCE = new CarServiceImpl();
+    private static final CarServiceImpl CAR_SERVICE = new CarServiceImpl();
     private final CarRepositoryImpl carRepository;
     private CarServiceImpl(){
-        this.carRepository = CarRepositoryImpl.getInstance();
+        this.carRepository = CarRepositoryImpl.getCarRepository();
     }
-    public static CarServiceImpl getInstance(){
-        return INSTANCE;
+    public static CarServiceImpl getCarService(){
+        return CAR_SERVICE;
     }
 
     @Override
