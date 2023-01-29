@@ -11,4 +11,7 @@ public class Car {
     private String model;
     private String registrationNumber;
     private boolean status;
+    public void rentCar(){
+        this.status = true;
+    }
 }

@@ -20,7 +20,7 @@ public class ReadCarsController extends HttpServlet {
     private final CarService carService;
 
     public ReadCarsController() {
-        this.carService = new CarServiceImpl(new CarRepositoryImpl());
+        this.carService = CarServiceImpl.getInstance();
     }
 
     @Override
@@ -29,5 +29,10 @@ public class ReadCarsController extends HttpServlet {
         List<Car> cars = carService.showAllCars();
         req.setAttribute("cars", cars);
         requestDispatcher.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
     }
 }
