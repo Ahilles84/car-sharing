@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Create new user</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/pages/styles/w3.css">
 </head>
 <body>
     <div class="w3-container w3-blue-grey w3-opacity w3-left-align">
@@ -49,15 +49,6 @@
             <td><label>
                 <input type="text" name="userType" placeholder="choose your userType">
             </label></td>
-<%--            <p>--%>
-<%--                <label>--%>
-<%--                    <select size="2">--%>
-<%--                        <option disabled>choose your userType</option>--%>
-<%--                        <option value="USER">USER</option>--%>
-<%--                        <option value="ADMIN">ADMIN</option>--%>
-<%--                    </select>--%>
-<%--                </label>--%>
-<%--            </p>--%>
             <td><input type="submit" value="CREATE" class="w3-btn w3-green w3-round-large w3-margin-bottom"></td>
         </tr>
     </form>

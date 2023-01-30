@@ -6,20 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarRepositoryImpl implements CarRepository {
-    private final List<Car> cars;
-    {
-        cars = new ArrayList<>();
-        cars.add(new Car("Volkswagen Polo", "AB 1234-6", false));
-        cars.add(new Car ("Renault Laguna", "АТ 4578-6", false));
-        cars.add(new Car ("BMW X6", "РР 5555-6", false));
+    private static final List<Car> CARS = new ArrayList<>();
+    private static final CarRepositoryImpl CAR_REPOSITORY = new CarRepositoryImpl();
+
+    private CarRepositoryImpl() {
     }
+
+    public static CarRepositoryImpl getCarRepository() {
+        return CAR_REPOSITORY;
+    }
+
+    static {
+        CARS.add(new Car("Volkswagen Polo", "AB 1234-6", false));
+        CARS.add(new Car("Renault Laguna", "АТ 4578-6", false));
+        CARS.add(new Car("BMW X6", "РР 5555-6", false));
+    }
+
     @Override
-    public void addCar(List<Car> cars, String model, String registrationNumber) {
-        cars.add(new Car (model, registrationNumber, false));
+    public void addCar(String model, String registrationNumber, boolean status) {
+        CARS.add(new Car(model, registrationNumber, false));
     }
 
     @Override
     public List<Car> showAllCars() {
-        return cars;
+        return CARS;
     }
 }

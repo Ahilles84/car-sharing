@@ -16,8 +16,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/user/create"}, loadOnStartup = 0)
 public class CreateUserController extends HttpServlet {
     private static final long serialVersionUID = 411848468446548L;
-    private static final String USERS_PAGE = "/user/read";
-    private static final String ADD_USER_PAGE = "/pages/user/add_user.jsp";
+    private static final String USERS_LIST = "/user/read";
+    private static final String REGISTRATION_PAGE = "/pages/user/registration_page.jsp";
 
     private UserService userService;
 
@@ -30,17 +30,17 @@ public class CreateUserController extends HttpServlet {
         String password = req.getParameter("password");
         UserType userType = UserType.valueOf(req.getParameter("userType"));
         userService.createUser(firstName, lastName, age, login, password, userType);
-        req.getRequestDispatcher(USERS_PAGE).forward(req, resp);
+        req.getRequestDispatcher(USERS_LIST).forward(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(ADD_USER_PAGE);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(REGISTRATION_PAGE);
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     public void init(ServletConfig config) {
-        userService = (UserServiceImpl) config.getServletContext().getAttribute("userService");
+        userService = UserServiceImpl.getUserService();
     }
 }

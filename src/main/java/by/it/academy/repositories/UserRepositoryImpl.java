@@ -3,14 +3,22 @@ package by.it.academy.repositories;
 import by.it.academy.entities.User;
 import by.it.academy.entities.UserType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private final List<User> users;
+    private static final List<User> users = new ArrayList<>();
+    private static final UserRepositoryImpl USER_REPOSITORY = new UserRepositoryImpl();
+    static {
+        users.add(new User("Oleg", "Kuleshov", 38, "peretz", "peretz", UserType.ADMIN));
+        users.add(new User("Dmitry", "Steba", 38, "dimas", "dimas", UserType.USER));
+    }
 
-    public UserRepositoryImpl(List<User> users) {
-        this.users = users;
+    private UserRepositoryImpl() {
+    }
+    public static UserRepositoryImpl getUserRepository(){
+        return USER_REPOSITORY;
     }
 
     @Override

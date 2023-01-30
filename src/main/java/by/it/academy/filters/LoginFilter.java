@@ -1,7 +1,6 @@
 package by.it.academy.filters;
 
 import by.it.academy.entities.User;
-import by.it.academy.repositories.UserRepositoryImpl;
 import by.it.academy.services.UserService;
 import by.it.academy.services.UserServiceImpl;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,9 +36,7 @@ public class LoginFilter extends HttpFilter {
 
     @Override
     public void init(FilterConfig config) {
-        List<User> users = new ArrayList<>();
-        userService = new UserServiceImpl(new UserRepositoryImpl(users));
-        config.getServletContext().setAttribute("userService", userService);
+        userService = UserServiceImpl.getUserService();
     }
 
     @Override

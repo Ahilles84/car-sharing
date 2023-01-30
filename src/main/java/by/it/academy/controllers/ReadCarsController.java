@@ -1,7 +1,6 @@
 package by.it.academy.controllers;
 
 import by.it.academy.entities.Car;
-import by.it.academy.repositories.CarRepositoryImpl;
 import by.it.academy.services.CarServiceImpl;
 import by.it.academy.services.CarService;
 
@@ -20,7 +19,7 @@ public class ReadCarsController extends HttpServlet {
     private final CarService carService;
 
     public ReadCarsController() {
-        this.carService = new CarServiceImpl(new CarRepositoryImpl());
+        this.carService = CarServiceImpl.getCarService();
     }
 
     @Override
@@ -29,5 +28,10 @@ public class ReadCarsController extends HttpServlet {
         List<Car> cars = carService.showAllCars();
         req.setAttribute("cars", cars);
         requestDispatcher.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
     }
 }

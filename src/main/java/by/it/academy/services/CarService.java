@@ -5,6 +5,6 @@ import by.it.academy.entities.Car;
 import java.util.List;
 
 public interface CarService {
-    void addCar (List<Car> cars, String model, String registrationNumber);
+    void addCar (String model, String registrationNumber, boolean status);
     List<Car> showAllCars();
 }

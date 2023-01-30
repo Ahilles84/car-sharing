@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Cars</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/pages/styles/w3.css">
 </head>
 <body>
 <table>
@@ -34,6 +34,6 @@
 </table>
 <a href="<c:url value="/user/create"/>">Register</a>
 <a href="<c:url value="/index.html"/>">Main page</a>
-
+<a href="<c:url value="/car/create"/>">Add new car</a>
 </body>
 </html>
