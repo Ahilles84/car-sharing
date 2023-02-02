@@ -30,7 +30,7 @@ public class AuthorisationController extends HttpServlet {
         for (User user : users) {
             if (login.equals(user.getLogin()) && password.equals(user.getPassword())){
                 session.setAttribute("userType", user.getUserType());
-                req.getRequestDispatcher("/index.html").forward(req, resp);
+                req.getRequestDispatcher("/index.jsp").forward(req, resp);
             } else {
                 req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
             }
