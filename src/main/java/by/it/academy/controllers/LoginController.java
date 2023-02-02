@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/login"})
-public class AuthorisationController extends HttpServlet {
+public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1023446025548L;
     private static final String LOGIN_PAGE = "/pages/user/login_page.jsp";
     private UserService userService;
@@ -31,8 +31,6 @@ public class AuthorisationController extends HttpServlet {
             if (login.equals(user.getLogin()) && password.equals(user.getPassword())){
                 session.setAttribute("userType", user.getUserType());
                 req.getRequestDispatcher("/index.jsp").forward(req, resp);
-            } else {
-                req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
             }
         }
     }

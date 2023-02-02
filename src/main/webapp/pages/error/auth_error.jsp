@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/pages/styles/w3.css">
 </head>
 <body>
-<div>
-    <h1>Please sign in before continue.</h1>
+<div class="w3-container w3-blue-grey w3-opacity w3-left-align">
+    <h1>Please sign in like ADMIN before continue.</h1>
 </div>
     <a href="<c:url value="/login"/>">Sign in</a>
     <a href="<c:url value="/user/create"/>">Register</a>
