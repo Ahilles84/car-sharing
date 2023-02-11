@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
@@ -28,17 +29,20 @@ public class LoginController extends HttpServlet {
         List<User> users = userService.readUsers();
         HttpSession session = req.getSession();
         for (User user : users) {
-            if (login.equals(user.getLogin()) && password.equals(user.getPassword())){
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 session.setAttribute("userType", user.getUserType());
-                req.getRequestDispatcher("/index.jsp").forward(req, resp);
+                session.setAttribute("login", user.getLogin());
             }
         }
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(LOGIN_PAGE);
         requestDispatcher.forward(req, resp);
     }
+
     @Override
     public void init(ServletConfig config) {
         userService = UserServiceImpl.getUserService();

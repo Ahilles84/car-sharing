@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/user/create"}, loadOnStartup = 0)
@@ -23,13 +24,15 @@ public class CreateUserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         int age = Integer.parseInt(req.getParameter("age"));
-        String login = req.getParameter("login");
+        String newLogin = req.getParameter("login");
         String password = req.getParameter("password");
         UserType userType = UserType.valueOf(req.getParameter("userType"));
-        userService.createUser(firstName, lastName, age, login, password, userType);
+        userService.createUser(firstName, lastName, age, newLogin, password, userType);
+        session.setAttribute("newLogin", newLogin);
         req.getRequestDispatcher(USERS_LIST).forward(req, resp);
     }
 

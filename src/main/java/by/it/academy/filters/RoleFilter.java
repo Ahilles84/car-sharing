@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/user/read"})
+@WebFilter(urlPatterns = {"/user/read", "/car/create"})
 public class RoleFilter extends HttpFilter {
     private static final long serialVersionUID = 4141316242L;
 

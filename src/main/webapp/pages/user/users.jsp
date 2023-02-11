@@ -14,6 +14,7 @@
 </head>
 <body class="w3-light-grey">
   <h1>Users list</h1>
+  <h2>New user "<c:out value="${sessionScope.newLogin}"/>" created successfully!</h2>
 <table>
   <thead>
     <tr>

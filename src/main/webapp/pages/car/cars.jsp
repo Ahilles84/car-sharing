@@ -34,6 +34,9 @@
 </table>
 <a href="<c:url value="/user/create"/>">Register</a>
 <a href="<c:url value="/index.jsp"/>">Main page</a>
-<a href="<c:url value="/car/create"/>">Add new car</a>
+<c:if test="${sessionScope.userType == ADMIN}">
+    <a href="<c:url value="/car/create"/>">Add new car</a>
+</c:if>
+
 </body>
 </html>
