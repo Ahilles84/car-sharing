@@ -12,7 +12,13 @@ public class Car {
     private String model;
     private String registrationNumber;
     private boolean status;
-    public void rentCar(){
+
+    public Car(String model, String registrationNumber) {
+        this.model = model;
+        this.registrationNumber = registrationNumber;
+    }
+
+    public void rentCar() {
         this.status = true;
     }
 

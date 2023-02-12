@@ -9,10 +9,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CarDAO implements DAO<Car, String> {
+    private static final CarDAO CAR_DAO;
+
+    static {
+        try {
+            CAR_DAO = new CarDAO();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private final Connection connection;
 
-    public CarDAO() throws SQLException {
+    private CarDAO() throws SQLException {
         this.connection = DBConnector.createConnection();
+    }
+
+    public static CarDAO getCarDao() {
+        return CAR_DAO;
     }
 
     @Override
@@ -21,7 +35,6 @@ public class CarDAO implements DAO<Car, String> {
         try (PreparedStatement statement = connection.prepareStatement(SQLCar.INSERT.QUERY)) {
             statement.setString(1, car.getModel());
             statement.setString(2, car.getRegistrationNumber());
-            statement.setBoolean(3, car.isBusy());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,11 +77,11 @@ public class CarDAO implements DAO<Car, String> {
     @Override
     public boolean delete(Car car) {
         boolean result = false;
-        try(PreparedStatement statement = connection.prepareStatement(SQLCar.DELETE.QUERY)){
+        try (PreparedStatement statement = connection.prepareStatement(SQLCar.DELETE.QUERY)) {
             statement.setInt(1, car.getId());
             statement.setString(2, car.getRegistrationNumber());
             result = statement.executeQuery().next();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.getStackTrace();
         }
         return result;
@@ -76,7 +89,7 @@ public class CarDAO implements DAO<Car, String> {
 
     enum SQLCar {
         GET("SELECT * FROM cars WHERE RegNumber = (?)"),
-        INSERT("INSERT INTO cars (car_id, Model, RegNumber, Status) VALUES (DEFAULT, (?), (?), (?)) RETURNING car_id"),
+        INSERT("INSERT INTO cars (car_id, Model, RegNumber, Status) VALUES (DEFAULT, (?), (?), DEFAULT) RETURNING car_id"),
         DELETE("DELETE FROM cars WHERE car_id = (?) AND RegNumber = (?) RETURNING car_id"),
         UPDATE("UPDATE cars SET Model = (?) WHERE car_id = (?) RETURNING car_id");
 

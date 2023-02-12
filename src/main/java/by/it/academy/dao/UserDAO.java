@@ -4,17 +4,30 @@ import by.it.academy.entities.User;
 import by.it.academy.entities.UserType;
 import by.it.academy.repositories.DBConnector;
 
-import javax.validation.constraints.NotNull;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO implements DAO<User, String> {
+    private static final UserDAO USER_DAO;
+
+    static {
+        try {
+            USER_DAO = new UserDAO();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private final Connection connection;
 
-    public UserDAO() throws SQLException {
+    private UserDAO() throws SQLException {
         this.connection = DBConnector.createConnection();
+    }
+
+    public static UserDAO getUserDao() {
+        return USER_DAO;
     }
 
     @Override
@@ -26,7 +39,6 @@ public class UserDAO implements DAO<User, String> {
             statement.setInt(3, user.getAge());
             statement.setString(4, user.getLogin());
             statement.setString(5, user.getPassword());
-            statement.setString(6, user.getUserType().name());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +97,7 @@ public class UserDAO implements DAO<User, String> {
 
     enum SQLUser {
         GET("SELECT * FROM users WHERE Login = (?)"),
-        INSERT("INSERT INTO users (user_id, FirstName, LastName, Age, Login, Password, Role) VALUES (DEFAULT, (?), (?), (?), (?), (?), (?)) RETURNING user_id"),
+        INSERT("INSERT INTO users (user_id, FirstName, LastName, Age, Login, Password, Role) VALUES (DEFAULT, (?), (?), (?), (?), (?), DEFAULT) RETURNING user_id"),
         DELETE("DELETE FROM users WHERE user_id = (?) AND Login = (?) AND Password = (?) RETURNING user_id"),
         UPDATE("UPDATE users SET Password = (?) WHERE user_id = (?) RETURNING user_id");
 
