@@ -2,7 +2,7 @@ package by.it.academy.dao;
 
 import by.it.academy.entities.User;
 import by.it.academy.entities.UserType;
-import by.it.academy.repositories.DBConnector;
+import by.it.academy.database.DBConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -65,7 +65,11 @@ public class UserDAO implements DAO<User, String> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        if (user.getId() == -1){
+            return null;
+        } else {
+            return user;
+        }
     }
 
     @Override
@@ -85,21 +89,18 @@ public class UserDAO implements DAO<User, String> {
     public boolean delete(User user) {
         boolean result = false;
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.DELETE.QUERY)) {
-            statement.setInt(1, user.getId());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getPassword());
+            statement.setString(1, user.getLogin());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return result;
     }
-
     enum SQLUser {
-        GET("SELECT * FROM users WHERE Login = (?)"),
-        INSERT("INSERT INTO users (user_id, FirstName, LastName, Age, Login, Password, Role) VALUES (DEFAULT, (?), (?), (?), (?), (?), DEFAULT) RETURNING user_id"),
-        DELETE("DELETE FROM users WHERE user_id = (?) AND Login = (?) AND Password = (?) RETURNING user_id"),
-        UPDATE("UPDATE users SET Password = (?) WHERE user_id = (?) RETURNING user_id");
+        GET("SELECT * FROM users WHERE login = (?)"),
+        INSERT("INSERT INTO users (user_id, firstname, lastname, age, login, pass, usertype) VALUES (DEFAULT, (?), (?), (?), (?), (?), DEFAULT) RETURNING user_id"),
+        DELETE("DELETE FROM users WHERE login = (?) RETURNING user_id"),
+        UPDATE("UPDATE users SET pass = (?) WHERE user_id = (?) RETURNING user_id");
 
         final String QUERY;
 

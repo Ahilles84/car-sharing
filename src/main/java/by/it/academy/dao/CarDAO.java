@@ -1,7 +1,7 @@
 package by.it.academy.dao;
 
 import by.it.academy.entities.Car;
-import by.it.academy.repositories.DBConnector;
+import by.it.academy.database.DBConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,12 +88,12 @@ public class CarDAO implements DAO<Car, String> {
     }
 
     enum SQLCar {
-        GET("SELECT * FROM cars WHERE RegNumber = (?)"),
-        INSERT("INSERT INTO cars (car_id, Model, RegNumber, Status) VALUES (DEFAULT, (?), (?), DEFAULT) RETURNING car_id"),
-        DELETE("DELETE FROM cars WHERE car_id = (?) AND RegNumber = (?) RETURNING car_id"),
-        UPDATE("UPDATE cars SET Model = (?) WHERE car_id = (?) RETURNING car_id");
+        GET("SELECT * FROM cars WHERE regnumber = (?)"),
+        INSERT("INSERT INTO cars (car_id, model, regnumber, status) VALUES (DEFAULT, (?), (?), DEFAULT) RETURNING car_id"),
+        DELETE("DELETE FROM cars WHERE car_id = (?) AND regnumber = (?) RETURNING car_id"),
+        UPDATE("UPDATE cars SET model = (?) WHERE car_id = (?) RETURNING car_id");
 
-        final String QUERY;
+        public final String QUERY;
 
         SQLCar(String QUERY) {
             this.QUERY = QUERY;
