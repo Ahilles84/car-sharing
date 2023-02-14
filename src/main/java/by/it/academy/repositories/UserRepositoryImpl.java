@@ -10,6 +10,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final List<User> users = new ArrayList<>();
     private static final UserRepositoryImpl USER_REPOSITORY = new UserRepositoryImpl();
+
     static {
         users.add(new User("Oleg", "Kuleshov", 38, "peretz", "peretz", UserType.ADMIN));
         users.add(new User("Dmitry", "Steba", 38, "dimas", "dimas", UserType.USER));
@@ -17,7 +18,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     private UserRepositoryImpl() {
     }
-    public static UserRepositoryImpl getUserRepository(){
+
+    public static UserRepositoryImpl getUserRepository() {
         return USER_REPOSITORY;
     }
 

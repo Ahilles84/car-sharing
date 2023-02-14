@@ -17,6 +17,6 @@
         <h1>User with such login already exists. Please choose another login.</h1>
     </div>
     <a href="<c:url value="/user/create"/>">Register</a>
-    <a href="<c:url value="/index.html"/>">Main page</a>
+    <a href="<c:url value="/index.jsp"/>">Main page</a>
 </body>
 </html>
