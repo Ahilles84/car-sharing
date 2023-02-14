@@ -10,30 +10,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO implements DAO<User, String> {
-    private static final UserDAO USER_DAO;
+    private static volatile UserDAO instance;
 
-    static {
-        try {
-            USER_DAO = new UserDAO();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private final Connection connection;
-
-    private UserDAO() throws SQLException {
-        this.connection = DBConnector.createConnection();
+    private UserDAO() {
     }
 
     public static UserDAO getUserDao() {
-        return USER_DAO;
+        UserDAO result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized (UserDAO.class) {
+            if (instance == null) {
+                instance = new UserDAO();
+            }
+            return instance;
+        }
     }
 
     @Override
     public boolean create(User user) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLUser.INSERT.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLUser.INSERT.QUERY)) {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setInt(3, user.getAge());
@@ -50,7 +49,8 @@ public class UserDAO implements DAO<User, String> {
     public User read(String login) {
         final User user = new User();
         user.setId(-1);
-        try (PreparedStatement statement = connection.prepareStatement(SQLUser.GET.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLUser.GET.QUERY)) {
             statement.setString(1, login);
             final ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -65,7 +65,7 @@ public class UserDAO implements DAO<User, String> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (user.getId() == -1){
+        if (user.getId() == -1) {
             return null;
         } else {
             return user;
@@ -75,7 +75,8 @@ public class UserDAO implements DAO<User, String> {
     @Override
     public boolean update(User user) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLUser.UPDATE.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLUser.UPDATE.QUERY)) {
             statement.setString(1, user.getPassword());
             statement.setInt(2, user.getId());
             result = statement.executeQuery().next();
@@ -88,7 +89,8 @@ public class UserDAO implements DAO<User, String> {
     @Override
     public boolean delete(User user) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLUser.DELETE.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLUser.DELETE.QUERY)) {
             statement.setString(1, user.getLogin());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
@@ -96,6 +98,7 @@ public class UserDAO implements DAO<User, String> {
         }
         return result;
     }
+
     enum SQLUser {
         GET("SELECT * FROM users WHERE login = (?)"),
         INSERT("INSERT INTO users (user_id, firstname, lastname, age, login, pass, usertype) VALUES (DEFAULT, (?), (?), (?), (?), (?), DEFAULT) RETURNING user_id"),

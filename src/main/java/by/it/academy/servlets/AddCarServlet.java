@@ -3,7 +3,6 @@ package by.it.academy.servlets;
 import by.it.academy.dao.CarDAO;
 import by.it.academy.entities.Car;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +28,7 @@ public class AddCarServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(ADD_CAR_PAGE);
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher(ADD_CAR_PAGE).forward(req, resp);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package by.it.academy.dao;
 
-import by.it.academy.entities.Car;
 import by.it.academy.database.DBConnector;
+import by.it.academy.entities.Car;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,30 +9,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CarDAO implements DAO<Car, String> {
-    private static final CarDAO CAR_DAO;
+    private static volatile CarDAO instance;
 
-    static {
-        try {
-            CAR_DAO = new CarDAO();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private final Connection connection;
-
-    private CarDAO() throws SQLException {
-        this.connection = DBConnector.createConnection();
+    private CarDAO() {
     }
 
     public static CarDAO getCarDao() {
-        return CAR_DAO;
+        CarDAO result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized (CarDAO.class) {
+            if (instance == null) {
+                instance = new CarDAO();
+            }
+            return instance;
+        }
     }
 
     @Override
     public boolean create(Car car) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLCar.INSERT.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCar.INSERT.QUERY)) {
             statement.setString(1, car.getModel());
             statement.setString(2, car.getRegistrationNumber());
             result = statement.executeQuery().next();
@@ -46,7 +45,8 @@ public class CarDAO implements DAO<Car, String> {
     public Car read(String registrationNumber) {
         Car car = new Car();
         car.setId(-1);
-        try (PreparedStatement statement = connection.prepareStatement(SQLCar.GET.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCar.GET.QUERY)) {
             statement.setString(1, registrationNumber);
             final ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -64,7 +64,8 @@ public class CarDAO implements DAO<Car, String> {
     @Override
     public boolean update(Car car) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLCar.UPDATE.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCar.UPDATE.QUERY)) {
             statement.setString(1, car.getModel());
             statement.setInt(2, car.getId());
             result = statement.executeQuery().next();
@@ -77,7 +78,8 @@ public class CarDAO implements DAO<Car, String> {
     @Override
     public boolean delete(Car car) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLCar.DELETE.QUERY)) {
+        try (Connection connection = DBConnector.createConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCar.DELETE.QUERY)) {
             statement.setInt(1, car.getId());
             statement.setString(2, car.getRegistrationNumber());
             result = statement.executeQuery().next();
@@ -93,7 +95,7 @@ public class CarDAO implements DAO<Car, String> {
         DELETE("DELETE FROM cars WHERE car_id = (?) AND regnumber = (?) RETURNING car_id"),
         UPDATE("UPDATE cars SET model = (?) WHERE car_id = (?) RETURNING car_id");
 
-        public final String QUERY;
+        final String QUERY;
 
         SQLCar(String QUERY) {
             this.QUERY = QUERY;

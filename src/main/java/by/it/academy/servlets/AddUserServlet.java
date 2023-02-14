@@ -2,9 +2,8 @@ package by.it.academy.servlets;
 
 import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.User;
+import lombok.SneakyThrows;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,14 +29,14 @@ public class AddUserServlet extends HttpServlet {
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
+    @SneakyThrows
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(REGISTRATION_PAGE);
-        requestDispatcher.forward(req, resp);
+    public void init() {
+        userDAO = UserDAO.getUserDao();
     }
 
     @Override
-    public void init(ServletConfig config) {
-        userDAO = UserDAO.getUserDao();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher(REGISTRATION_PAGE).forward(req, resp);
     }
 }
