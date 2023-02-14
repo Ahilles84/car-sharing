@@ -3,7 +3,6 @@ package by.it.academy.servlets;
 import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.User;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,12 +42,11 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(LOGIN_PAGE);
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
     }
 
     private boolean isUserExist(String login) {
-        user = userDAO.read(login);
+        this.user = userDAO.read(login);
         return user.getLogin().equals(this.login) && user.getPassword().equals(this.password);
     }
 }

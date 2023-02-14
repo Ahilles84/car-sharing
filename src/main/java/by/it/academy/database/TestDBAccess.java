@@ -12,5 +12,8 @@ public class TestDBAccess {
         String login = "peretz";
         User user = userDAO.read(login);
         System.out.println(user);
+
+        System.out.println(userDAO.readAllUsers());
+
     }
 }

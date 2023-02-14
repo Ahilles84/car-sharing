@@ -2,11 +2,12 @@ package by.it.academy.dao;
 
 import by.it.academy.database.DBConnector;
 import by.it.academy.entities.Car;
+import by.it.academy.entities.User;
+import by.it.academy.entities.UserType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarDAO implements DAO<Car, String> {
     private static volatile CarDAO instance;
@@ -88,9 +89,28 @@ public class CarDAO implements DAO<Car, String> {
         }
         return result;
     }
+    public List<Car> readAllCars() {
+        final List<Car> cars = new ArrayList<>();
+        try (Connection connection = DBConnector.createConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SQLCar.GET_ALL.QUERY);
+            while (resultSet.next()) {
+                Car car = new Car();
+                car.setId(resultSet.getInt(1));
+                car.setModel(resultSet.getString(2));
+                car.setRegistrationNumber(resultSet.getString(3));
+                car.setStatus(resultSet.getBoolean(4));
+                cars.add(car);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cars;
+    }
 
     enum SQLCar {
         GET("SELECT * FROM cars WHERE regnumber = (?)"),
+        GET_ALL("SELECT * FROM cars"),
         INSERT("INSERT INTO cars (car_id, model, regnumber, status) VALUES (DEFAULT, (?), (?), DEFAULT) RETURNING car_id"),
         DELETE("DELETE FROM cars WHERE car_id = (?) AND regnumber = (?) RETURNING car_id"),
         UPDATE("UPDATE cars SET model = (?) WHERE car_id = (?) RETURNING car_id");
