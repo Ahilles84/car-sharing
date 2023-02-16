@@ -8,10 +8,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Car {
+    private int id;
     private String model;
     private String registrationNumber;
     private boolean status;
-    public void rentCar(){
-        this.status = true;
+
+    public Car(String model, String registrationNumber) {
+        this.model = model;
+        this.registrationNumber = registrationNumber;
+    }
+
+    public boolean isBusy() {
+        return status;
     }
 }
