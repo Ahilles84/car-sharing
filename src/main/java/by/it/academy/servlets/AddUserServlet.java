@@ -2,7 +2,6 @@ package by.it.academy.servlets;
 
 import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.User;
-import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +28,6 @@ public class AddUserServlet extends HttpServlet {
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
-    @SneakyThrows
     @Override
     public void init() {
         userDAO = UserDAO.getUserDao();

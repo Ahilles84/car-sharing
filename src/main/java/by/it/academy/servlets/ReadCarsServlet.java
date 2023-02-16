@@ -21,7 +21,7 @@ public class ReadCarsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(CARS_LIST);
-        List<Car> cars = carDAO.readAllCars();
+        List<Car> cars = carDAO.readAll();
         req.setAttribute("users", cars);
         requestDispatcher.forward(req, resp);
     }

@@ -1,15 +1,14 @@
 package by.it.academy.dao;
 
+import by.it.academy.constants.SQLCar;
 import by.it.academy.database.DBConnector;
 import by.it.academy.entities.Car;
-import by.it.academy.entities.User;
-import by.it.academy.entities.UserType;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarDAO implements DAO<Car, String> {
+public class CarDAO implements DAO<Car, Integer> {
     private static volatile CarDAO instance;
 
     private CarDAO() {
@@ -43,12 +42,12 @@ public class CarDAO implements DAO<Car, String> {
     }
 
     @Override
-    public Car read(String registrationNumber) {
+    public Car read(Integer id) {
         Car car = new Car();
         car.setId(-1);
         try (Connection connection = DBConnector.createConnection();
              PreparedStatement statement = connection.prepareStatement(SQLCar.GET.QUERY)) {
-            statement.setString(1, registrationNumber);
+            statement.setInt(1, id);
             final ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 car.setId(resultSet.getInt(1));
@@ -59,7 +58,11 @@ public class CarDAO implements DAO<Car, String> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return car;
+        if (car.getId() == -1) {
+            return null;
+        } else {
+            return car;
+        }
     }
 
     @Override
@@ -67,7 +70,7 @@ public class CarDAO implements DAO<Car, String> {
         boolean result = false;
         try (Connection connection = DBConnector.createConnection();
              PreparedStatement statement = connection.prepareStatement(SQLCar.UPDATE.QUERY)) {
-            statement.setString(1, car.getModel());
+            statement.setBoolean(1, true);
             statement.setInt(2, car.getId());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
@@ -89,7 +92,9 @@ public class CarDAO implements DAO<Car, String> {
         }
         return result;
     }
-    public List<Car> readAllCars() {
+
+    @Override
+    public List<Car> readAll() {
         final List<Car> cars = new ArrayList<>();
         try (Connection connection = DBConnector.createConnection();
              Statement statement = connection.createStatement()) {
@@ -106,19 +111,5 @@ public class CarDAO implements DAO<Car, String> {
             e.printStackTrace();
         }
         return cars;
-    }
-
-    enum SQLCar {
-        GET("SELECT * FROM cars WHERE regnumber = (?)"),
-        GET_ALL("SELECT * FROM cars"),
-        INSERT("INSERT INTO cars (car_id, model, regnumber, status) VALUES (DEFAULT, (?), (?), DEFAULT) RETURNING car_id"),
-        DELETE("DELETE FROM cars WHERE car_id = (?) AND regnumber = (?) RETURNING car_id"),
-        UPDATE("UPDATE cars SET model = (?) WHERE car_id = (?) RETURNING car_id");
-
-        final String QUERY;
-
-        SQLCar(String QUERY) {
-            this.QUERY = QUERY;
-        }
     }
 }

@@ -21,7 +21,7 @@ public class ReadUsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(USERS_LIST);
-        List<User> users = userDAO.readAllUsers();
+        List<User> users = userDAO.readAll();
         req.setAttribute("users", users);
         requestDispatcher.forward(req, resp);
     }

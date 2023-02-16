@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import static by.it.academy.constants.Constants.ADD_CAR_PAGE;
 
 @WebServlet(urlPatterns = {"/car/create"})
 public class AddCarServlet extends HttpServlet {
     private static final long serialVersionUID = 446548L;
-    private static final String ADD_CAR_PAGE = "/pages/car/add_car_page.jsp";
     private CarDAO carDAO;
 
     @Override

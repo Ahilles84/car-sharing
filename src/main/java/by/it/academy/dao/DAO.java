@@ -1,5 +1,7 @@
 package by.it.academy.dao;
 
+import java.util.List;
+
 public interface DAO<Entity, Key> {
     boolean create(Entity model);
 
@@ -8,4 +10,5 @@ public interface DAO<Entity, Key> {
     boolean update(Entity model);
 
     boolean delete(Entity model);
+    List<Entity> readAll();
 }

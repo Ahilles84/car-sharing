@@ -18,10 +18,6 @@ public class Car {
         this.registrationNumber = registrationNumber;
     }
 
-    public void rentCar() {
-        this.status = true;
-    }
-
     public boolean isBusy() {
         return status;
     }
