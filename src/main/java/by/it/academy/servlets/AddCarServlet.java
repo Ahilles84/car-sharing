@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import static by.it.academy.constants.Constants.ADD_CAR_PAGE;
+import static by.it.academy.constants.Constants.CARS_LIST;
 
 @WebServlet(urlPatterns = {"/car/create"})
 public class AddCarServlet extends HttpServlet {
@@ -23,7 +24,7 @@ public class AddCarServlet extends HttpServlet {
         String registrationNumber = req.getParameter("registrationNumber");
         Car car = new Car(model, registrationNumber);
         carDAO.create(car);
-        req.getRequestDispatcher("/cars").forward(req, resp);
+        req.getRequestDispatcher(CARS_LIST).forward(req, resp);
     }
 
     @Override

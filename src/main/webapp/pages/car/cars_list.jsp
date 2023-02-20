@@ -20,7 +20,7 @@
         <tr>
             <td>${car.model}</td>
             <td>${car.registrationNumber}</td>
-            <td>${car.isBusy() ? "Busy" : "Free"}</td>
+            <td>${car.status ? "Busy" : "Free"}</td>
         </tr>
     </c:forEach>
     </tbody>

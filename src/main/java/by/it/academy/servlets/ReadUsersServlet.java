@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static by.it.academy.constants.Constants.USERS_LIST;
+
 @WebServlet(urlPatterns = {"/users"})
 public class ReadUsersServlet extends HttpServlet {
     private static final long serialVersionUID = 1028L;
-    private static final String USERS_LIST = "/pages/user/users_list.jsp";
     private UserDAO userDAO;
 
     @Override
@@ -25,10 +26,12 @@ public class ReadUsersServlet extends HttpServlet {
         req.setAttribute("users", users);
         requestDispatcher.forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
+
     @Override
     public void init() {
         userDAO = UserDAO.getUserDao();

@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.it.academy.constants.Constants.LOGIN_EXISTS_ERROR_PAGE;
+
 @WebFilter(urlPatterns = {"/user/create"})
 public class CheckLoginFilter extends HttpFilter {
-    private static final String LOGIN_NOT_UNIQUE_PAGE = "/pages/error/login_exists.jsp";
     private UserDAO userDAO;
 
     @Override
@@ -21,7 +22,7 @@ public class CheckLoginFilter extends HttpFilter {
         String login = req.getParameter("Login");
         User user = userDAO.read(login);
         if (user != null) {
-            req.getRequestDispatcher(LOGIN_NOT_UNIQUE_PAGE).forward(req, res);
+            req.getRequestDispatcher(LOGIN_EXISTS_ERROR_PAGE).forward(req, res);
         } else {
             chain.doFilter(req, res);
         }

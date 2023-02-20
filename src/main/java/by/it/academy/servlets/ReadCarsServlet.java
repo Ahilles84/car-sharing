@@ -12,23 +12,26 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static by.it.academy.constants.Constants.CARS_LIST;
+
 @WebServlet(urlPatterns = {"/cars"})
 public class ReadCarsServlet extends HttpServlet {
     private static final long serialVersionUID = 98L;
-    private static final String CARS_LIST = "/pages/car/cars_list.jsp";
     private CarDAO carDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(CARS_LIST);
         List<Car> cars = carDAO.readAll();
-        req.setAttribute("users", cars);
+        req.setAttribute("cars", cars);
         requestDispatcher.forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
+
     @Override
     public void init() {
         carDAO = CarDAO.getCarDao();

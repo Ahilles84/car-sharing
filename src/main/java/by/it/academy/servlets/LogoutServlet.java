@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.it.academy.constants.Constants.MAIN_PAGE;
+
 @WebServlet(urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
     private static final long serialVersionUID = 344602554021L;
@@ -16,6 +18,6 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.removeAttribute("userType");
         session.removeAttribute("login");
-        resp.sendRedirect("/index.jsp");
+        resp.sendRedirect(MAIN_PAGE);
     }
 }
