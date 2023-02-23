@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="by.it.academy.models">
+    <class name="by.it.academy.models.User" table="users">
+        <id name="id" column="user_id">
+            <generator class="identity"/>
+        </id>
+        <property name="firstName" type="java.lang.String" column="firstname"/>
+        <property name="lastName" type="java.lang.String" column="lastname"/>
+        <property name="age" type="java.lang.Integer" column="age"/>
+        <property name="login" type="java.lang.String" column="login"/>
+        <property name="password" type="java.lang.String" column="pass"/>
+        <property name="userType" type="by.it.academy.entities.UserType" column="usertype"/>
+    </class>
+</hibernate-mapping>
