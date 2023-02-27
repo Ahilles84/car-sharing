@@ -1,9 +1,8 @@
 package by.it.academy.servlets;
 
 import by.it.academy.dao.CarDAO;
-import by.it.academy.dao.UserDAO;
+import by.it.academy.entities.Car;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,16 +13,17 @@ import java.io.IOException;
 public class CarBookingServlet extends HttpServlet {
     private static final long serialVersionUID = 714505178L;
     private CarDAO carDAO;
-    private UserDAO userDAO;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Integer id = Integer.valueOf(req.getParameter("id"));
+        Car car = carDAO.read(id);
+        carDAO.update(car);
+        resp.sendRedirect("/cars");
     }
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         carDAO = CarDAO.getCarDao();
-        userDAO = UserDAO.getUserDao();
     }
 }
