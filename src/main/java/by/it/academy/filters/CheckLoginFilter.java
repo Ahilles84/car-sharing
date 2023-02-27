@@ -19,7 +19,7 @@ public class CheckLoginFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        String login = req.getParameter("Login");
+        String login = req.getParameter("login");
         User user = userDAO.read(login);
         if (user != null) {
             req.getRequestDispatcher(LOGIN_EXISTS_ERROR_PAGE).forward(req, res);

@@ -9,6 +9,7 @@ public class Constants {
     public static final String LOGIN_PAGE = "/pages/user/login_page.jsp";
     public static final String ADMIN_PAGE = "/pages/admin/admin_page.jsp";
     public static final String USER_NOT_FOUND_ERROR_PAGE = "/pages/errors/wrong_credentials.jsp";
-    public static final String LOGIN_EXISTS_ERROR_PAGE = "/pages/error/login_exists.jsp";
+    public static final String LOGIN_EXISTS_ERROR_PAGE = "/pages/errors/login_exists.jsp";
+    public static final String CAR_BUSY_ERROR_PAGE = "/pages/errors/car_is_busy.jsp";
 
 }
