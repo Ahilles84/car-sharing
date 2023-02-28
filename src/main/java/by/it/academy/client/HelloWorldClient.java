@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HelloWorldClient {
     public static void main(String[] args) {
-        removeEntity();
+        System.out.println(getAllUsers());
     }
     private static void dirtyEntityUpdate(){
         Session session = HibernateUtil.getSessionFactory().openSession();

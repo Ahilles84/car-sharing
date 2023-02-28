@@ -10,7 +10,7 @@
         <property name="connection.url">jdbc:postgresql://localhost:5432/car_sharing</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">per4atka</property>
-        <property name="show_sql ">true</property>
+        <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
         <mapping resource="user.hbm.xml" />

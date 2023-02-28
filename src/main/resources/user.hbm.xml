@@ -12,6 +12,6 @@
         <property name="age" type="java.lang.Integer" column="age"/>
         <property name="login" type="java.lang.String" column="login"/>
         <property name="password" type="java.lang.String" column="pass"/>
-        <property name="userType" type="by.it.academy.entities.UserType" column="usertype"/>
+        <property name="userType" type="java.lang.String" column="usertype" generated="insert"/>
     </class>
 </hibernate-mapping>
