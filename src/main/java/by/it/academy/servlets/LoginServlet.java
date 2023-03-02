@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void directToPage(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
-        if (user.getUserType().equals(UserType.ADMIN)) {
+        if (user.getUserType().equals("ADMIN")) {
             req.getRequestDispatcher(ADMIN_PAGE).forward(req, resp);
         } else {
             req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);

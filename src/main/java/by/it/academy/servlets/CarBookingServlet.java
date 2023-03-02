@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.it.academy.constants.Constants.USER_NOT_FOUND_ERROR_PAGE;
-
 @WebServlet(urlPatterns = {"/car/booking"})
 public class CarBookingServlet extends HttpServlet {
     private static final long serialVersionUID = 714505178L;

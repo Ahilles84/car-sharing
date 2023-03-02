@@ -1,4 +1,4 @@
-package by.it.academy.database;
+package by.it.academy.util;
 
 import java.sql.*;
 

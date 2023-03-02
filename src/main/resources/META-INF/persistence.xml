@@ -3,7 +3,23 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-  <persistence-unit name="default">
-
-  </persistence-unit>
+    <persistence-unit name="CarSharingClient"> <!-- Имя единицы хранения -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider
+        </provider> <!-- в качестве провайдера JPA выступает Hibernate  -->
+        <!--        <jta-data-source>myDS</jta-data-source>-->
+        <class>by.it.academy.entities.User</class> <!-- хранимые классы   -->
+        <class>by.it.academy.entities.Car</class> <!-- хранимые классы   -->
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties> <!-- набор свойств  -->
+            <!--            <property-->
+            <!--                    name="javax.persistence.schema-generation.database.action"-->
+            <!--                    value="drop-and-create"/>--> <!-- создает и удалеяет БД   -->
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/car_sharing"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="per4atka"/>
+        </properties>
+    </persistence-unit>
 </persistence>

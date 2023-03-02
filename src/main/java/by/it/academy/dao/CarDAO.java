@@ -1,11 +1,11 @@
 package by.it.academy.dao;
 
-import by.it.academy.constants.SQLCar;
-import by.it.academy.database.DBConnector;
 import by.it.academy.entities.Car;
+import by.it.academy.util.JPAUtil;
 
-import java.sql.*;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class CarDAO implements DAO<Car, Integer> {
@@ -28,88 +28,55 @@ public class CarDAO implements DAO<Car, Integer> {
     }
 
     @Override
-    public boolean create(Car car) {
-        boolean result = false;
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLCar.INSERT.QUERY)) {
-            statement.setString(1, car.getModel());
-            statement.setString(2, car.getRegistrationNumber());
-            result = statement.executeQuery().next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
+    public void create(Car car) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(car);
+        transaction.commit();
+        entityManager.close();
     }
 
     @Override
     public Car read(Integer id) {
-        Car car = new Car();
-        car.setId(-1);
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLCar.GET.QUERY)) {
-            statement.setInt(1, id);
-            final ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                car.setId(resultSet.getInt(1));
-                car.setModel(resultSet.getString(2));
-                car.setRegistrationNumber(resultSet.getString(3));
-                car.setStatus(resultSet.getBoolean(4));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (car.getId() == -1) {
-            return null;
-        } else {
-            return car;
-        }
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Car car = entityManager.find(Car.class, id);
+        transaction.commit();
+        entityManager.close();
+        return car;
     }
 
     @Override
-    public boolean update(Car car) {
-        boolean result = false;
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLCar.UPDATE.QUERY)) {
-            statement.setBoolean(1, true);
-            statement.setInt(2, car.getId());
-            result = statement.executeQuery().next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
+    public void update(Car car) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        car.setStatus(true);
+        entityManager.persist(car);
+        transaction.commit();
+        entityManager.close();
     }
 
     @Override
-    public boolean delete(Car car) {
-        boolean result = false;
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLCar.DELETE.QUERY)) {
-            statement.setInt(1, car.getId());
-            statement.setString(2, car.getRegistrationNumber());
-            result = statement.executeQuery().next();
-        } catch (SQLException e) {
-            e.getStackTrace();
-        }
-        return result;
+    public void delete(Car car) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(car);
+        transaction.commit();
+        entityManager.close();
     }
 
     @Override
     public List<Car> readAll() {
-        final List<Car> cars = new ArrayList<>();
-        try (Connection connection = DBConnector.createConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SQLCar.GET_ALL.QUERY);
-            while (resultSet.next()) {
-                Car car = new Car();
-                car.setId(resultSet.getInt(1));
-                car.setModel(resultSet.getString(2));
-                car.setRegistrationNumber(resultSet.getString(3));
-                car.setStatus(resultSet.getBoolean(4));
-                cars.add(car);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return cars;
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        TypedQuery<Car> query = entityManager.createQuery("from Car", Car.class);
+        transaction.commit();
+        entityManager.close();
+        return query.getResultList();
     }
 }

@@ -4,13 +4,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "CARS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Car {
+    @Id
+    @Column(name = "CAR_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "MODEL")
     private String model;
+    @Column(name = "REG_NUMBER")
     private String registrationNumber;
+    @Column(name = "STATUS")
+    @GeneratedValue(generator = "false")
     private boolean status;
 
     public Car(String model, String registrationNumber) {
