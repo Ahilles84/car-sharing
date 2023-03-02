@@ -2,7 +2,6 @@ package by.it.academy.servlets;
 
 import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.User;
-import by.it.academy.entities.UserType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
