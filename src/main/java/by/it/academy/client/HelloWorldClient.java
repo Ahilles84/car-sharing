@@ -1,6 +1,6 @@
 package by.it.academy.client;
 
-import by.it.academy.models.User;
+import by.it.academy.entities.User;
 import by.it.academy.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

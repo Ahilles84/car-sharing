@@ -2,7 +2,6 @@ package by.it.academy.servlets;
 
 import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.User;
-import by.it.academy.entities.UserType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,7 +39,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void directToPage(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
-        if (user.getUserType().equals(UserType.ADMIN)) {
+        if (user.getUserType().equals("ADMIN")) {
             req.getRequestDispatcher(ADMIN_PAGE).forward(req, resp);
         } else {
             req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);

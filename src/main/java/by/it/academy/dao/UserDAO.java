@@ -1,12 +1,11 @@
 package by.it.academy.dao;
 
-import by.it.academy.constants.SQLUser;
 import by.it.academy.entities.User;
-import by.it.academy.entities.UserType;
-import by.it.academy.database.DBConnector;
+import by.it.academy.utils.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements DAO<User, String> {
@@ -29,95 +28,26 @@ public class UserDAO implements DAO<User, String> {
     }
 
     @Override
-    public boolean create(User user) {
-        boolean result = false;
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLUser.INSERT.QUERY)) {
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setInt(3, user.getAge());
-            statement.setString(4, user.getLogin());
-            statement.setString(5, user.getPassword());
-            result = statement.executeQuery().next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
+    public void create(User user) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public User read(String login) {
-        final User user = new User();
-        user.setId(-1);
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLUser.GET.QUERY)) {
-            statement.setString(1, login);
-            final ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                user.setId(resultSet.getInt(1));
-                user.setFirstName(resultSet.getString(2));
-                user.setLastName(resultSet.getString(3));
-                user.setAge(resultSet.getInt(4));
-                user.setLogin(resultSet.getString(5));
-                user.setPassword(resultSet.getString(6));
-                user.setUserType(UserType.valueOf(resultSet.getString(7)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (user.getId() == -1) {
-            return null;
-        } else {
-            return user;
-        }
+        return  null;
     }
 
-    @Override
-    public boolean update(User user) {
-        boolean result = false;
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLUser.UPDATE.QUERY)) {
-            statement.setString(1, user.getPassword());
-            statement.setInt(2, user.getId());
-            result = statement.executeQuery().next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
-    @Override
-    public boolean delete(User user) {
-        boolean result = false;
-        try (Connection connection = DBConnector.createConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLUser.DELETE.QUERY)) {
-            statement.setString(1, user.getLogin());
-            result = statement.executeQuery().next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
     @Override
     public List<User> readAll() {
-        final List<User> users = new ArrayList<>();
-        try (Connection connection = DBConnector.createConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SQLUser.GET_ALL.QUERY);
-            while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt(1));
-                user.setFirstName(resultSet.getString(2));
-                user.setLastName(resultSet.getString(3));
-                user.setAge(resultSet.getInt(4));
-                user.setLogin(resultSet.getString(5));
-                user.setPassword(resultSet.getString(6));
-                user.setUserType(UserType.valueOf(resultSet.getString(7)));
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<User> query = session.createQuery("from User", User.class);
+            return query.list();
         }
-        return users;
     }
 }
