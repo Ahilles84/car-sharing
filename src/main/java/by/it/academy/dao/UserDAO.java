@@ -32,6 +32,7 @@ public class UserDAO implements DAO<User, String> {
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+        user.setUserType("USER");
         entityManager.persist(user);
         transaction.commit();
         entityManager.close();
@@ -75,8 +76,9 @@ public class UserDAO implements DAO<User, String> {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TypedQuery<User> query = entityManager.createQuery("from User", User.class);
+        List<User> users = query.getResultList();
         transaction.commit();
         entityManager.close();
-        return query.getResultList();
+        return users;
     }
 }

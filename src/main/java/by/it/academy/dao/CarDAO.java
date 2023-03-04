@@ -32,6 +32,7 @@ public class CarDAO implements DAO<Car, Integer> {
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+        car.setStatus(false);
         entityManager.persist(car);
         transaction.commit();
         entityManager.close();
@@ -75,8 +76,9 @@ public class CarDAO implements DAO<Car, Integer> {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TypedQuery<Car> query = entityManager.createQuery("from Car", Car.class);
+        List<Car> cars = query.getResultList();
         transaction.commit();
         entityManager.close();
-        return query.getResultList();
+        return cars;
     }
 }

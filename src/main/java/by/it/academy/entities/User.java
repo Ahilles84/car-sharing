@@ -27,7 +27,6 @@ public class User {
     @Column(name = "PASSWORD")
     private String password;
     @Column(name = "ROLE")
-    @GeneratedValue(generator = "USER")
     private String userType;
 
     public User(String firstName, String lastName, int age, String login, String password) {

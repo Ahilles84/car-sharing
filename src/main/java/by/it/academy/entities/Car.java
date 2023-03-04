@@ -18,10 +18,9 @@ public class Car {
     private int id;
     @Column(name = "MODEL")
     private String model;
-    @Column(name = "REG_NUMBER")
+    @Column(name = "NUMBER")
     private String registrationNumber;
     @Column(name = "STATUS")
-    @GeneratedValue(generator = "false")
     private boolean status;
 
     public Car(String model, String registrationNumber) {
