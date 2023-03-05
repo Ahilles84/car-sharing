@@ -1,12 +1,10 @@
 package by.it.academy.dao;
 
 import by.it.academy.entities.User;
-import by.it.academy.util.JPAUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDAO implements DAO<User, String> {
     private static volatile UserDAO instance;
@@ -29,21 +27,18 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public void create(User user) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         user.setUserType("USER");
         entityManager.persist(user);
         transaction.commit();
         entityManager.close();
     }
-
     @Override
     public User read(String login) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        User user = entityManager.find(User.class, login);
+        TypedQuery<User> query = entityManager.createQuery("from User where login = login", User.class);
+        Optional<User> users = query.getResultStream().findFirst();
+        User user = users.get();
         transaction.commit();
         entityManager.close();
         return user;
@@ -51,8 +46,6 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public void update(User user) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         user.setPassword("new password");
         entityManager.persist(user);
@@ -62,8 +55,6 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public void delete(User user) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.remove(user);
         transaction.commit();
@@ -72,8 +63,6 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public List<User> readAll() {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TypedQuery<User> query = entityManager.createQuery("from User", User.class);
         List<User> users = query.getResultList();
