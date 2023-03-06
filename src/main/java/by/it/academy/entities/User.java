@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NamedQuery(name = "getUserByLogin", query = "from User where login = :login")
 @Entity
 @Table(name = "USERS")
 @Data
@@ -26,8 +27,9 @@ public class User {
     private String login;
     @Column(name = "PASSWORD")
     private String password;
+    @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
-    private String userType;
+    private Role role;
 
     public User(String firstName, String lastName, int age, String login, String password) {
         this.firstName = firstName;

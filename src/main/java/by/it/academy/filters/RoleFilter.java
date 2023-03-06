@@ -1,5 +1,7 @@
 package by.it.academy.filters;
 
+import by.it.academy.entities.Role;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebFilter;
@@ -16,8 +18,8 @@ public class RoleFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession session = req.getSession();
-        String userType = (String) session.getAttribute("userType");
-        if (userType == null || userType.equals("USER")) {
+        Role role = (Role) session.getAttribute("role");
+        if (role == null || role == Role.USER) {
             chain.doFilter(req, res);
         } else {
             req.getRequestDispatcher(ADMIN_PAGE).forward(req, res);

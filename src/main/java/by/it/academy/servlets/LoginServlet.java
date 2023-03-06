@@ -1,6 +1,7 @@
 package by.it.academy.servlets;
 
 import by.it.academy.dao.UserDAO;
+import by.it.academy.entities.Role;
 import by.it.academy.entities.User;
 
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         User user = userDAO.read(login);
         if (isUserExist(user, login, password)) {
-            session.setAttribute("userType", user.getUserType());
+            session.setAttribute("role", user.getRole());
             session.setAttribute("login", user.getLogin());
             session.setAttribute("user", user);
             directToPage(req, resp, user);
@@ -39,7 +40,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void directToPage(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
-        if (user.getUserType().equals("ADMIN")) {
+        if (user.getRole() == Role.ADMIN) {
             req.getRequestDispatcher(ADMIN_PAGE).forward(req, resp);
         } else {
             req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);

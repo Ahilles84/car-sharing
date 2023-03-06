@@ -1,7 +1,10 @@
 package by.it.academy.dao;
 
 import by.it.academy.entities.Car;
+import by.it.academy.util.JPAUtil;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public void create(Car car) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         car.setStatus(false);
         entityManager.persist(car);
@@ -35,6 +40,8 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public Car read(Integer id) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         Car car = entityManager.find(Car.class, id);
         transaction.commit();
@@ -44,6 +51,8 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public void update(Car car) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         car.setStatus(true);
         entityManager.persist(car);
@@ -53,6 +62,8 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public void delete(Car car) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.remove(car);
         transaction.commit();
@@ -61,9 +72,10 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public List<Car> readAll() {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        TypedQuery<Car> query = entityManager.createQuery("from Car", Car.class);
-        List<Car> cars = query.getResultList();
+        List<Car> cars = entityManager.createQuery("from Car", Car.class).getResultList();
         transaction.commit();
         entityManager.close();
         return cars;
