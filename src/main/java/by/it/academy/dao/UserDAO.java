@@ -6,12 +6,19 @@ import by.it.academy.util.JPAUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDAO implements DAO<User, String> {
+    private static final EntityManager entityManager;
+    private static final EntityTransaction transaction;
     private static volatile UserDAO instance;
 
+    static {
+        entityManager = JPAUtil.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
     private UserDAO() {
     }
 
@@ -30,57 +37,43 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public void create(User user) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         user.setRole(Role.USER);
         entityManager.persist(user);
         transaction.commit();
-        entityManager.close();
     }
+
     @Override
     public User read(String login) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        User user = null;
-        Optional<User> optionalUser = entityManager.createNamedQuery("getUserByLogin", User.class)
-                .getResultStream().findFirst();
-        if (optionalUser.isPresent()) user = optionalUser.get();
+        TypedQuery<User> userTypedQuery = entityManager.createNamedQuery("getUserByLogin", User.class)
+                .setParameter("userLogin", login);
+        Optional<User> optionalUser = userTypedQuery.getResultStream().findFirst();
+        User user = optionalUser.orElseGet(User::new);
         transaction.commit();
-        entityManager.close();
         return user;
     }
 
     @Override
     public void update(User user) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         user.setPassword("new password");
         entityManager.persist(user);
         transaction.commit();
-        entityManager.close();
     }
 
     @Override
     public void delete(User user) {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.remove(user);
         transaction.commit();
-        entityManager.close();
     }
 
     @Override
     public List<User> readAll() {
-        EntityManager entityManager = JPAUtil.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         List<User> users = entityManager.createQuery("from User", User.class).getResultList();
         transaction.commit();
-        entityManager.close();
         return users;
     }
 }

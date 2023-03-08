@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NamedQuery(name = "getUserByLogin", query = "from User where login = :login")
+@NamedQuery(name = "getUserByLogin", query = "from User where login = :userLogin")
 @Entity
 @Table(name = "USERS")
 @Data
