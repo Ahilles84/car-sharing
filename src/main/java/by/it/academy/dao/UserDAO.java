@@ -19,6 +19,7 @@ public class UserDAO implements DAO<User, String> {
         entityManager = JPAUtil.getEntityManager();
         transaction = entityManager.getTransaction();
     }
+
     private UserDAO() {
     }
 
@@ -49,7 +50,7 @@ public class UserDAO implements DAO<User, String> {
         TypedQuery<User> userTypedQuery = entityManager.createNamedQuery("getUserByLogin", User.class)
                 .setParameter("userLogin", login);
         Optional<User> optionalUser = userTypedQuery.getResultStream().findFirst();
-        User user = optionalUser.orElseGet(User::new);
+        User user = optionalUser.orElse(null);
         transaction.commit();
         return user;
     }
