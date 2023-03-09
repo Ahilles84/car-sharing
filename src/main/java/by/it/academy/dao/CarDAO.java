@@ -1,21 +1,15 @@
 package by.it.academy.dao;
 
 import by.it.academy.entities.Car;
-import by.it.academy.util.JPAUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import java.util.List;
 
+import static by.it.academy.constants.Constants.entityManager;
+import static by.it.academy.constants.Constants.transaction;
+
 public class CarDAO implements DAO<Car, Integer> {
-    private static final EntityManager entityManager;
-    private static final EntityTransaction transaction;
     private static volatile CarDAO instance;
 
-    static {
-        entityManager = JPAUtil.getEntityManager();
-        transaction = entityManager.getTransaction();
-    }
     private CarDAO() {
     }
 

@@ -2,23 +2,16 @@ package by.it.academy.dao;
 
 import by.it.academy.entities.Role;
 import by.it.academy.entities.User;
-import by.it.academy.util.JPAUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDAO implements DAO<User, String> {
-    private static final EntityManager entityManager;
-    private static final EntityTransaction transaction;
-    private static volatile UserDAO instance;
+import static by.it.academy.constants.Constants.entityManager;
+import static by.it.academy.constants.Constants.transaction;
 
-    static {
-        entityManager = JPAUtil.getEntityManager();
-        transaction = entityManager.getTransaction();
-    }
+public class UserDAO implements DAO<User, String> {
+    private static volatile UserDAO instance;
 
     private UserDAO() {
     }
