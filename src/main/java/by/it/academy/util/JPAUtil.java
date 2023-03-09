@@ -5,12 +5,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class JPAUtil {
-    private static final EntityManager ENTITY_MANAGER = biuldEntityManager();
-    private static EntityManager biuldEntityManager(){
+    private final EntityManager entityManager = biuldEntityManager();
+
+    private EntityManager biuldEntityManager() {
         EntityManagerFactory carSharingClient = Persistence.createEntityManagerFactory("CarSharingClient");
         return carSharingClient.createEntityManager();
     }
-    public static EntityManager getEntityManager(){
-        return ENTITY_MANAGER;
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 }

@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private boolean isUserExist(User user, String login, String password) {
-        return user.getLogin().equals(login) && user.getPassword().equals(password);
+        return user != null && user.getLogin().equals(login) && user.getPassword().equals(password);
     }
 
     private void directToPage(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
