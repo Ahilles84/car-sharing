@@ -1,8 +1,9 @@
 package by.it.academy.servlets;
 
-import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.Role;
 import by.it.academy.entities.User;
+import by.it.academy.services.ServiceInstance;
+import by.it.academy.services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,14 +18,14 @@ import static by.it.academy.constants.Constants.*;
 @WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 10225548L;
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("Login");
         String password = req.getParameter("Password");
         HttpSession session = req.getSession();
-        User user = userDAO.read(login);
+        User user = userService.getUserDAO().read(login);
         if (isUserExist(user, login, password)) {
             session.setAttribute("role", user.getRole());
             session.setAttribute("login", user.getLogin());
@@ -54,6 +55,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void init() {
-        userDAO = UserDAO.getUserDao();
+        userService = ServiceInstance.USER_SERVICE.getUserService();
     }
 }

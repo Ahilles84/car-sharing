@@ -1,7 +1,8 @@
 package by.it.academy.servlets;
 
-import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.User;
+import by.it.academy.services.ServiceInstance;
+import by.it.academy.services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ import static by.it.academy.constants.Constants.REGISTRATION_PAGE;
 @WebServlet(urlPatterns = {"/user/create"})
 public class AddUserServlet extends HttpServlet {
     private static final long serialVersionUID = 8446548L;
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,13 +27,13 @@ public class AddUserServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         User user = new User(firstName, lastName, age, login, password);
-        userDAO.create(user);
+        userService.getUserDAO().create(user);
         req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);
     }
 
     @Override
     public void init() {
-        userDAO = UserDAO.getUserDao();
+        userService = ServiceInstance.USER_SERVICE.getUserService();
     }
 
     @Override

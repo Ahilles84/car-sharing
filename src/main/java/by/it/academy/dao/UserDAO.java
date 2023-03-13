@@ -11,30 +11,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDAO implements DAO<User, String> {
-    private static volatile UserDAO instance;
     private EntityManager entityManager;
     private EntityTransaction transaction;
 
-    private UserDAO() {
-    }
-
-    public static UserDAO getUserDao() {
-        UserDAO result = instance;
-        if (result != null) {
-            return result;
-        }
-        synchronized (UserDAO.class) {
-            if (instance == null) {
-                instance = new UserDAO();
-            }
-            return instance;
-        }
-    }
-
-    @Override
-    public void create(User user) {
+    private void initEntityManager(){
         entityManager = new JPAUtil().getEntityManager();
         transaction = entityManager.getTransaction();
+    }
+    @Override
+    public void create(User user) {
+        initEntityManager();
         transaction.begin();
         user.setRole(Role.USER);
         entityManager.persist(user);
@@ -44,8 +30,7 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public User read(String login) {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
         TypedQuery<User> userTypedQuery = entityManager.createNamedQuery("getUserByLogin", User.class)
                 .setParameter("userLogin", login);
@@ -58,19 +43,17 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public void update(User user) {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
-        user.setPassword("new password");
-        entityManager.persist(user);
+        User newAdmin = entityManager.merge(user);
+        newAdmin.setRole(Role.ADMIN);
         transaction.commit();
         entityManager.close();
     }
 
     @Override
     public void delete(User user) {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
         entityManager.remove(user);
         transaction.commit();
@@ -79,8 +62,7 @@ public class UserDAO implements DAO<User, String> {
 
     @Override
     public List<User> readAll() {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
         List<User> users = entityManager.createQuery("from User", User.class).getResultList();
         transaction.commit();

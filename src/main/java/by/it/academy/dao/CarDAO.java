@@ -8,30 +8,17 @@ import javax.persistence.EntityTransaction;
 import java.util.List;
 
 public class CarDAO implements DAO<Car, Integer> {
-    private static volatile CarDAO instance;
     private EntityManager entityManager;
     private EntityTransaction transaction;
 
-    private CarDAO() {
-    }
-
-    public static CarDAO getCarDao() {
-        CarDAO result = instance;
-        if (result != null) {
-            return result;
-        }
-        synchronized (CarDAO.class) {
-            if (instance == null) {
-                instance = new CarDAO();
-            }
-            return instance;
-        }
+    private void initEntityManager(){
+        entityManager = new JPAUtil().getEntityManager();
+        transaction = entityManager.getTransaction();
     }
 
     @Override
     public void create(Car car) {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
         car.setStatus(false);
         entityManager.persist(car);
@@ -41,8 +28,7 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public Car read(Integer id) {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
         Car car = entityManager.find(Car.class, id);
         transaction.commit();
@@ -52,19 +38,17 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public void update(Car car) {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
-        car.setStatus(true);
-        entityManager.persist(car);
+        Car bookedCar = entityManager.merge(car);
+        bookedCar.setStatus(true);
         transaction.commit();
         entityManager.close();
     }
 
     @Override
     public void delete(Car car) {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
         entityManager.remove(car);
         transaction.commit();
@@ -73,8 +57,7 @@ public class CarDAO implements DAO<Car, Integer> {
 
     @Override
     public List<Car> readAll() {
-        entityManager = new JPAUtil().getEntityManager();
-        transaction = entityManager.getTransaction();
+        initEntityManager();
         transaction.begin();
         List<Car> cars = entityManager.createQuery("from Car", Car.class).getResultList();
         transaction.commit();
