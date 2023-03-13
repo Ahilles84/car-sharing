@@ -28,6 +28,7 @@
     </tbody>
 </table>
 <a href="<c:url value="/user/create"/>">Register</a>
+<a href="<c:url value="/user/delete"/>">Delete User</a>
 <a href="<c:url value="/index.jsp"/>">Main page</a>
 </body>
 </html>

@@ -55,7 +55,8 @@ public class UserDAO implements DAO<User, String> {
     public void delete(User user) {
         initEntityManager();
         transaction.begin();
-        entityManager.remove(user);
+        User deletedUser = entityManager.merge(user);
+        entityManager.remove(deletedUser);
         transaction.commit();
         entityManager.close();
     }

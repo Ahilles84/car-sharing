@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", user);
             directToPage(req, resp, user);
         } else {
-            req.getRequestDispatcher(USER_NOT_FOUND_ERROR_PAGE).forward(req, resp);
+            req.getRequestDispatcher(WRONG_CREDENTIALS_ERROR).forward(req, resp);
         }
     }
 
