@@ -20,11 +20,11 @@ public class CarBookingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Integer id = Integer.valueOf(req.getParameter("id"));
-        Car car = carService.getCarDAO().read(id);
+        Car car = carService.getDAOInstance().read(id);
         if (car.isBusy()) {
             req.getRequestDispatcher(Constants.CAR_BUSY_ERROR_PAGE).forward(req, resp);
         } else {
-            carService.getCarDAO().update(car);
+            carService.getDAOInstance().update(car);
             resp.sendRedirect("/cars");
         }
     }

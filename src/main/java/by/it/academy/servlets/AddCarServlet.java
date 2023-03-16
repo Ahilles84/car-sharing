@@ -24,7 +24,7 @@ public class AddCarServlet extends HttpServlet {
         String model = req.getParameter("model");
         String registrationNumber = req.getParameter("registrationNumber");
         Car car = new Car(model, registrationNumber);
-        carService.getCarDAO().create(car);
+        carService.getDAOInstance().create(car);
         req.getRequestDispatcher("/cars").forward(req, resp);
     }
 

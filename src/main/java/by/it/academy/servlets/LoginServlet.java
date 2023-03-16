@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("Login");
         String password = req.getParameter("Password");
         HttpSession session = req.getSession();
-        User user = userService.getUserDAO().read(login);
+        User user = userService.getDAOInstance().read(login);
         if (isUserExist(user, login, password)) {
             session.setAttribute("role", user.getRole());
             session.setAttribute("login", user.getLogin());

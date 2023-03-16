@@ -1,4 +1,5 @@
 package by.it.academy.services;
 
-public interface CarSharingService {
+public interface CarSharingService <D>{
+    D getDAOInstance();
 }

@@ -50,7 +50,8 @@ public class CarDAO implements DAO<Car, Integer> {
     public void delete(Car car) {
         initEntityManager();
         transaction.begin();
-        entityManager.remove(car);
+        Car deletedCar = entityManager.merge(car);
+        entityManager.remove(deletedCar);
         transaction.commit();
         entityManager.close();
     }

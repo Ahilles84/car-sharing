@@ -22,9 +22,9 @@ public class DeleteUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("Login");
-        User user = userService.getUserDAO().read(login);
+        User user = userService.getDAOInstance().read(login);
         if (isUserExist(user, login)) {
-            userService.getUserDAO().delete(user);
+            userService.getDAOInstance().delete(user);
             resp.sendRedirect("/users");
         } else {
             req.getRequestDispatcher(USER_NOT_FOUND_ERROR).forward(req, resp);

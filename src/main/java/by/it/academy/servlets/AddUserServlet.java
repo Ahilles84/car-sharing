@@ -27,7 +27,7 @@ public class AddUserServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         User user = new User(firstName, lastName, age, login, password);
-        userService.getUserDAO().create(user);
+        userService.getDAOInstance().create(user);
         req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);
     }
 
