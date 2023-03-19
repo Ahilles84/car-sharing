@@ -1,7 +1,8 @@
 package by.it.academy.filters;
 
-import by.it.academy.dao.UserDAO;
 import by.it.academy.entities.User;
+import by.it.academy.services.ServiceInstance;
+import by.it.academy.services.UserService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,12 +16,12 @@ import static by.it.academy.constants.Constants.LOGIN_EXISTS_ERROR_PAGE;
 
 @WebFilter(urlPatterns = {"/user/create"})
 public class CheckLoginFilter extends HttpFilter {
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String login = req.getParameter("login");
-        User user = userDAO.read(login);
+        User user = userService.getDAOInstance().read(login);
         if (user != null) {
             req.getRequestDispatcher(LOGIN_EXISTS_ERROR_PAGE).forward(req, res);
         } else {
@@ -30,7 +31,7 @@ public class CheckLoginFilter extends HttpFilter {
 
     @Override
     public void init() {
-        userDAO = UserDAO.getUserDao();
+        userService = ServiceInstance.USER_SERVICE.getUserService();
     }
 
     @Override

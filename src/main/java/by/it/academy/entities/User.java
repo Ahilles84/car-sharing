@@ -3,18 +3,38 @@ package by.it.academy.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@NamedQuery(name = "getUserByLogin", query = "from User where login = :userLogin")
+@Entity
+@Table(name = "USERS")
+@DynamicInsert
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
     private int id;
+    @Column(name = "FIRSTNAME")
     private String firstName;
+    @Column(name = "LASTNAME")
     private String lastName;
+    @Column(name = "AGE")
     private int age;
+    @Column(name = "LOGIN")
     private String login;
+    @Column(name = "PASSWORD")
     private String password;
-    private UserType userType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE")
+    @ColumnDefault("USER")
+    private Role role;
 
     public User(String firstName, String lastName, int age, String login, String password) {
         this.firstName = firstName;

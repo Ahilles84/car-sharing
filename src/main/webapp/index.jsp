@@ -8,7 +8,7 @@
 <body>
 <div>
     <h1>Take and Drive!</h1>
-    <h2>Hello, <c:out value="${sessionScope.login}"/>!</h2>
+    <h2>Hello, <c:out value="${sessionScope.login}" default="guest"/>!</h2>
 </div>
 
 <div>

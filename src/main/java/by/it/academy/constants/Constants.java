@@ -6,10 +6,12 @@ public class Constants {
     public static final String CARS_LIST = "/pages/car/cars_list.jsp";
     public static final String USERS_LIST = "/pages/user/users_list.jsp";
     public static final String REGISTRATION_PAGE = "/pages/user/registration_page.jsp";
+    public static final String DELETE_USER_PAGE = "/pages/user/delete_user.jsp";
     public static final String LOGIN_PAGE = "/pages/user/login_page.jsp";
     public static final String ADMIN_PAGE = "/pages/admin/admin_page.jsp";
-    public static final String USER_NOT_FOUND_ERROR_PAGE = "/pages/errors/wrong_credentials.jsp";
+    public static final String WRONG_CREDENTIALS_ERROR = "/pages/errors/wrong_credentials.jsp";
+    public static final String USER_NOT_FOUND_ERROR = "/pages/errors/user_not_found.jsp";
+    public static final String USER_NOT_AUTHORISED = "/pages/errors/user_not_authorised.jsp";
     public static final String LOGIN_EXISTS_ERROR_PAGE = "/pages/errors/login_exists.jsp";
     public static final String CAR_BUSY_ERROR_PAGE = "/pages/errors/car_is_busy.jsp";
-
 }

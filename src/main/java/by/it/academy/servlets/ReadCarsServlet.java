@@ -1,7 +1,8 @@
 package by.it.academy.servlets;
 
-import by.it.academy.dao.CarDAO;
 import by.it.academy.entities.Car;
+import by.it.academy.services.CarService;
+import by.it.academy.services.ServiceInstance;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,12 +18,12 @@ import static by.it.academy.constants.Constants.CARS_LIST;
 @WebServlet(urlPatterns = {"/cars"})
 public class ReadCarsServlet extends HttpServlet {
     private static final long serialVersionUID = 98L;
-    private CarDAO carDAO;
+    private CarService carService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(CARS_LIST);
-        List<Car> cars = carDAO.readAll();
+        List<Car> cars = carService.getDAOInstance().readAll();
         req.setAttribute("cars", cars);
         requestDispatcher.forward(req, resp);
     }
@@ -34,6 +35,6 @@ public class ReadCarsServlet extends HttpServlet {
 
     @Override
     public void init() {
-        carDAO = CarDAO.getCarDao();
+        carService = ServiceInstance.CAR_SERVICE.getCarService();
     }
 }

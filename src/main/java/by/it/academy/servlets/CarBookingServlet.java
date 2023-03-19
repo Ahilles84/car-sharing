@@ -1,37 +1,41 @@
 package by.it.academy.servlets;
 
-import by.it.academy.constants.Constants;
-import by.it.academy.dao.CarDAO;
 import by.it.academy.entities.Car;
+import by.it.academy.entities.User;
+import by.it.academy.services.CarService;
+import by.it.academy.services.ServiceInstance;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.it.academy.constants.Constants.USER_NOT_FOUND_ERROR_PAGE;
+import static by.it.academy.constants.Constants.CAR_BUSY_ERROR_PAGE;
 
 @WebServlet(urlPatterns = {"/car/booking"})
 public class CarBookingServlet extends HttpServlet {
     private static final long serialVersionUID = 714505178L;
-    private CarDAO carDAO;
+    private CarService carService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Integer id = Integer.valueOf(req.getParameter("id"));
-        Car car = carDAO.read(id);
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        Car car = carService.getDAOInstance().read(id);
         if (car.isBusy()) {
-            req.getRequestDispatcher(Constants.CAR_BUSY_ERROR_PAGE).forward(req, resp);
+            req.getRequestDispatcher(CAR_BUSY_ERROR_PAGE).forward(req, resp);
         } else {
-            carDAO.update(car);
+            carService.getDAOInstance().rentCarByUser(car, user);
             resp.sendRedirect("/cars");
         }
     }
 
     @Override
     public void init() {
-        carDAO = CarDAO.getCarDao();
+        carService = ServiceInstance.CAR_SERVICE.getCarService();
     }
 }
