@@ -1,6 +1,7 @@
 package by.it.academy.servlets;
 
 import by.it.academy.entities.Car;
+import by.it.academy.entities.User;
 import by.it.academy.services.CarService;
 import by.it.academy.services.ServiceInstance;
 
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.it.academy.constants.Constants.CAR_BUSY_ERROR_PAGE;
@@ -21,11 +23,13 @@ public class CarBookingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Integer id = Integer.valueOf(req.getParameter("id"));
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
         Car car = carService.getDAOInstance().read(id);
         if (car.isBusy()) {
             req.getRequestDispatcher(CAR_BUSY_ERROR_PAGE).forward(req, resp);
         } else {
-            carService.getDAOInstance().update(car);
+            carService.getDAOInstance().rentCarByUser(car, user);
             resp.sendRedirect("/cars");
         }
     }

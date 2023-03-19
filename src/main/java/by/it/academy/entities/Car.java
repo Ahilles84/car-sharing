@@ -27,6 +27,15 @@ public class Car implements Serializable {
     @Column(name = "STATUS")
     @ColumnDefault("false")
     private boolean status;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
+    public Car(String model, String registrationNumber, User user) {
+        this.model = model;
+        this.registrationNumber = registrationNumber;
+        this.user = user;
+    }
 
     public Car(String model, String registrationNumber) {
         this.model = model;

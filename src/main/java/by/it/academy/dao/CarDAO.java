@@ -1,6 +1,7 @@
 package by.it.academy.dao;
 
 import by.it.academy.entities.Car;
+import by.it.academy.entities.User;
 import by.it.academy.util.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -63,5 +64,14 @@ public class CarDAO implements DAO<Car, Integer> {
         transaction.commit();
         entityManager.close();
         return cars;
+    }
+    public void rentCarByUser(Car car, User user){
+        initEntityManager();
+        transaction.begin();
+        Car bookedCar = entityManager.merge(car);
+        bookedCar.setUser(user);
+        bookedCar.setStatus(true);
+        transaction.commit();
+        entityManager.close();
     }
 }
