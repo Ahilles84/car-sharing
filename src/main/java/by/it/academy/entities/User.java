@@ -3,6 +3,8 @@ package by.it.academy.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +12,7 @@ import java.io.Serializable;
 @NamedQuery(name = "getUserByLogin", query = "from User where login = :userLogin")
 @Entity
 @Table(name = "USERS")
+@DynamicInsert
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,6 +33,7 @@ public class User implements Serializable {
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
+    @ColumnDefault("USER")
     private Role role;
 
     public User(String firstName, String lastName, int age, String login, String password) {

@@ -1,6 +1,5 @@
 package by.it.academy.servlets;
 
-import by.it.academy.constants.Constants;
 import by.it.academy.entities.Car;
 import by.it.academy.services.CarService;
 import by.it.academy.services.ServiceInstance;
@@ -12,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.it.academy.constants.Constants.CAR_BUSY_ERROR_PAGE;
+
 @WebServlet(urlPatterns = {"/car/booking"})
 public class CarBookingServlet extends HttpServlet {
     private static final long serialVersionUID = 714505178L;
@@ -22,7 +23,7 @@ public class CarBookingServlet extends HttpServlet {
         Integer id = Integer.valueOf(req.getParameter("id"));
         Car car = carService.getDAOInstance().read(id);
         if (car.isBusy()) {
-            req.getRequestDispatcher(Constants.CAR_BUSY_ERROR_PAGE).forward(req, resp);
+            req.getRequestDispatcher(CAR_BUSY_ERROR_PAGE).forward(req, resp);
         } else {
             carService.getDAOInstance().update(car);
             resp.sendRedirect("/cars");

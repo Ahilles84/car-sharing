@@ -22,7 +22,6 @@ public class UserDAO implements DAO<User, String> {
     public void create(User user) {
         initEntityManager();
         transaction.begin();
-        user.setRole(Role.USER);
         entityManager.persist(user);
         transaction.commit();
         entityManager.close();

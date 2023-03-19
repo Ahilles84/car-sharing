@@ -3,12 +3,15 @@ package by.it.academy.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "CARS")
+@DynamicInsert
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +25,7 @@ public class Car implements Serializable {
     @Column(name = "NUMBER")
     private String registrationNumber;
     @Column(name = "STATUS")
+    @ColumnDefault("false")
     private boolean status;
 
     public Car(String model, String registrationNumber) {

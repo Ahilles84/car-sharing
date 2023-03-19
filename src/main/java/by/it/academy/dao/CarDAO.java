@@ -20,7 +20,6 @@ public class CarDAO implements DAO<Car, Integer> {
     public void create(Car car) {
         initEntityManager();
         transaction.begin();
-        car.setStatus(false);
         entityManager.persist(car);
         transaction.commit();
         entityManager.close();
