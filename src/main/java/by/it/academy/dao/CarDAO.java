@@ -74,4 +74,13 @@ public class CarDAO implements DAO<Car, Integer> {
         transaction.commit();
         entityManager.close();
     }
+    public void releaseCar(Car car){
+        initEntityManager();
+        transaction.begin();
+        Car bookedCar = entityManager.merge(car);
+        bookedCar.setStatus(false);
+        bookedCar.setUser(null);
+        transaction.commit();
+        entityManager.close();
+    }
 }
